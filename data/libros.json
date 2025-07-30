@@ -5,5 +5,19 @@
         "genero": "fantasia",
         "valoracion": null,
         "id": "00001"
+    },
+    {
+        "titulo": "cien años de soledad",
+        "autor": "andres",
+        "genero": "ficcion",
+        "valoracion": 9.5,
+        "id": "00002"
+    },
+    {
+        "titulo": "un cuearto de huespedes",
+        "autor": "julian",
+        "genero": "fantasia",
+        "valoracion": 5.5,
+        "id": "00003"
     }
 ]

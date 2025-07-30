@@ -1,15 +1,14 @@
 from utils.screenControllers import limpiarPantalla
 import controllers.mainmenu as mainmenu
-from config import TITULO_APP
 
-def ejecutarAplicacion():
+def menu():
     menuPrincipal = [
-        "Añadir un Nuevo Elemento",
+        "Añadir Nuevo Elemento",
         "Ver Todos los Elementos",
-        "Buscar un Elemento",
-        "Editar un Elemento",
-        "Eliminar un Elemento",
-        "Ver elementos por categoria",
+        "Buscar Elemento",
+        "Editar Elemento",
+        "Eliminar Elemento",
+        "Ver Elementos por Categoría",
         "Guardar y Cargar Colección",
         "Salir"
     ]
@@ -17,20 +16,23 @@ def ejecutarAplicacion():
     while True:
         limpiarPantalla()
         print("===================================")
-        print(f"     {TITULO_APP}        ")
+        print("    Administrador de Colección     ")
         print("===================================")
-        for i, item in enumerate(menuPrincipal, start=1):
-            print(f"{i}. {item}")
+        for indice, item in enumerate(menuPrincipal, start=1):
+            print(f"{indice}. {item}")
         print("===================================")
 
         try:
-            opcion = int(input("Selecciona una opción (1-8): "))
+            opcion = int(input("Ingrese una opción (1-8): ").strip())
             limpiarPantalla()
 
             if opcion < 1 or opcion > len(menuPrincipal):
-                print("Opción fuera de rango.")
-                input("Presiona Enter para continuar...")
+                print("❌ Opción fuera de rango.")
+                input("Presione Enter para continuar...")
                 continue
+
+            print(f"Has seleccionado: {menuPrincipal[opcion - 1]}")
+            print("-----------------------------------")
 
             match opcion:
                 case 1:
@@ -50,12 +52,14 @@ def ejecutarAplicacion():
                 case 8:
                     limpiarPantalla()
                     print("===================================")
-                    print(" Gracias por usar la aplicación.  ")
+                    print(" Gracias por usar el Administrador ")
+                    print("     de Colección. ¡Hasta luego!   ")
                     print("===================================")
                     break
         except ValueError:
-            print("Debes ingresar un número válido.")
-            input("Presiona Enter para continuar...")
+            limpiarPantalla()
+            print("❌ Debe ingresar un número válido.")
+            input("Presione Enter para continuar...")
 
 if __name__ == "__main__":
-    ejecutarAplicacion()
+    menu()

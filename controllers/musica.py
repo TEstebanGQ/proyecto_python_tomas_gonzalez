@@ -1,5 +1,5 @@
 from config import RUTA_MUSICA
-from models.elemento import agregarElemento, listarElementos, buscarElemento, editarElemento, eliminarElemento
+from controllers.elemento import agregarElemento, listarElementos, buscarElemento, editarElemento, eliminarElemento
 
 # ✅ Agregar una nueva canción
 def agregarMusica():

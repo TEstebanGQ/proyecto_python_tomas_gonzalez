@@ -1,5 +1,5 @@
 from config import RUTA_PELICULAS
-from models.elemento import agregarElemento, listarElementos, buscarElemento, editarElemento, eliminarElemento
+from controllers.elemento import agregarElemento, listarElementos, buscarElemento, editarElemento, eliminarElemento
 
 # ✅ Agregar una nueva película
 def agregarPelicula():
