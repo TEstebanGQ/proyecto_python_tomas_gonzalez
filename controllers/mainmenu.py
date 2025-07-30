@@ -1,19 +1,14 @@
-from controllers.libros import agregar_libro, listar_libros, buscar_libro, editar_libro, eliminar_libro
-from controllers.peliculas import agregar_pelicula, listar_peliculas, buscar_pelicula, editar_pelicula, eliminar_pelicula
-from controllers.musica import agregar_musica, listar_musica, buscar_musica, editar_musica, eliminar_musica
-from utils.screenControllers import limpiar_pantalla, pausar_pantalla
-from utils.corefiles import cargar_json
-import os
+from utils.screenControllers import limpiarPantalla, pausarPantalla
+import controllers.libros as libros
+import controllers.peliculas as peliculas
+import controllers.musica as musica
+from utils.coreFiles import cargarJson, guardarJson
+from config import RUTA_LIBROS, RUTA_PELICULAS, RUTA_MUSICA
 
-# Rutas de los archivos JSON
-RUTA_LIBROS = "data/libros.json"
-RUTA_PELICULAS = "data/peliculas.json"
-RUTA_MUSICA = "data/musica.json"
-
-# ---------------- MENÚ: AÑADIR ELEMENTO ---------------- #
+# ✅ Submenú para añadir nuevo elemento
 def menuNuevoElemento():
     while True:
-        limpiar_pantalla()
+        limpiarPantalla()
         print("===================================")
         print("        Añadir un Nuevo Elemento   ")
         print("===================================")
@@ -22,181 +17,171 @@ def menuNuevoElemento():
         print("3. Música")
         print("4. Regresar al Menú Principal")
         print("===================================")
+        opcion = input("Selecciona una opción (1-4): ")
 
-        opcion = input("Seleccione una opción (1-4): ").strip()
-        match opcion:
-            case "1":
-                agregar_libro()
-            case "2":
-                agregar_pelicula()
-            case "3":
-                agregar_musica()
-            case "4":
-                break
-            case _:
-                print("❌ Opción inválida.")
-                pausar_pantalla()
+        if opcion == "1":
+            libros.agregarLibro()
+        elif opcion == "2":
+            peliculas.agregarPelicula()
+        elif opcion == "3":
+            musica.agregarMusica()
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
 
-# ---------------- MENÚ: LISTAR ELEMENTOS ---------------- #
-def ListarElementos():
+# ✅ Submenú para ver todos los elementos
+def listarElementos():
     while True:
-        limpiar_pantalla()
+        limpiarPantalla()
         print("===================================")
-        print("         Ver Todos los Elementos    ")
+        print("       Ver Todos los Elementos     ")
         print("===================================")
         print("1. Libros")
         print("2. Películas")
         print("3. Música")
         print("4. Regresar al Menú Principal")
         print("===================================")
+        opcion = input("Selecciona una opción (1-4): ")
 
-        opcion = input("Seleccione una opción (1-4): ").strip()
-        match opcion:
-            case "1":
-                listar_libros()
-            case "2":
-                listar_peliculas()
-            case "3":
-                listar_musica()
-            case "4":
-                break
-            case _:
-                print("❌ Opción inválida.")
-                pausar_pantalla()
+        if opcion == "1":
+            libros.listarLibros()
+        elif opcion == "2":
+            peliculas.listarPeliculas()
+        elif opcion == "3":
+            musica.listarMusica()
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
 
-# ---------------- MENÚ: BUSCAR ELEMENTO ---------------- #
+# ✅ Submenú para buscar un elemento
 def menuBuscarElemento():
     while True:
-        limpiar_pantalla()
+        limpiarPantalla()
         print("===================================")
-        print("         Buscar un Elemento         ")
+        print("          Buscar un Elemento       ")
         print("===================================")
         print("1. Buscar en Libros")
         print("2. Buscar en Películas")
         print("3. Buscar en Música")
         print("4. Regresar al Menú Principal")
         print("===================================")
+        opcion = input("Selecciona una opción (1-4): ")
 
-        opcion = input("Seleccione una opción (1-4): ").strip()
-        match opcion:
-            case "1":
-                buscar_libro()
-            case "2":
-                buscar_pelicula()
-            case "3":
-                buscar_musica()
-            case "4":
-                break
-            case _:
-                print("❌ Opción inválida.")
-                pausar_pantalla()
+        if opcion == "1":
+            libros.buscarLibro()
+        elif opcion == "2":
+            peliculas.buscarPelicula()
+        elif opcion == "3":
+            musica.buscarMusica()
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
 
-# ---------------- MENÚ: EDITAR ELEMENTO ---------------- #
+# ✅ Submenú para editar un elemento
 def menuEditarElemento():
     while True:
-        limpiar_pantalla()
+        limpiarPantalla()
         print("===================================")
-        print("         Editar un Elemento         ")
+        print("         Editar un Elemento        ")
         print("===================================")
         print("1. Editar Libro")
         print("2. Editar Película")
         print("3. Editar Música")
         print("4. Regresar al Menú Principal")
         print("===================================")
+        opcion = input("Selecciona una opción (1-4): ")
 
-        opcion = input("Seleccione una opción (1-4): ").strip()
-        match opcion:
-            case "1":
-                editar_libro()
-            case "2":
-                editar_pelicula()
-            case "3":
-                editar_musica()
-            case "4":
-                break
-            case _:
-                print("❌ Opción inválida.")
-                pausar_pantalla()
+        if opcion == "1":
+            libros.editarLibro()
+        elif opcion == "2":
+            peliculas.editarPelicula()
+        elif opcion == "3":
+            musica.editarMusica()
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
 
-# ---------------- MENÚ: ELIMINAR ELEMENTO ---------------- #
+# ✅ Submenú para eliminar un elemento
 def menuEliminarElemento():
     while True:
-        limpiar_pantalla()
+        limpiarPantalla()
         print("===================================")
-        print("         Eliminar un Elemento       ")
+        print("        Eliminar un Elemento       ")
         print("===================================")
         print("1. Eliminar Libro")
         print("2. Eliminar Película")
         print("3. Eliminar Música")
         print("4. Regresar al Menú Principal")
         print("===================================")
+        opcion = input("Selecciona una opción (1-4): ")
 
-        opcion = input("Seleccione una opción (1-4): ").strip()
-        match opcion:
-            case "1":
-                eliminar_libro()
-            case "2":
-                eliminar_pelicula()
-            case "3":
-                eliminar_musica()
-            case "4":
-                break
-            case _:
-                print("❌ Opción inválida.")
-                pausar_pantalla()
+        if opcion == "1":
+            libros.eliminarLibro()
+        elif opcion == "2":
+            peliculas.eliminarPelicula()
+        elif opcion == "3":
+            musica.eliminarMusica()
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
 
-# ---------------- MENÚ: VER POR CATEGORÍA ---------------- #
+# ✅ Submenú para guardar y cargar colección
+def menuGuardarCargar():
+    while True:
+        limpiarPantalla()
+        print("===================================")
+        print("       Guardar y Cargar Datos      ")
+        print("===================================")
+        print("1. Guardar colección actual")
+        print("2. Cargar colección guardada")
+        print("3. Regresar al Menú Principal")
+        print("===================================")
+        opcion = input("Selecciona una opción (1-3): ")
+
+        if opcion == "1":
+            print("Colección guardada automáticamente al agregar/editar/eliminar.")
+            pausarPantalla()
+        elif opcion == "2":
+            print("Los datos se cargan automáticamente al iniciar.")
+            pausarPantalla()
+        elif opcion == "3":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
+
 def menuVerCategoria():
     while True:
-        limpiar_pantalla()
+        limpiarPantalla()
         print("===================================")
-        print("     Ver Elementos por Categoría    ")
+        print("     Ver Elementos por Categoría   ")
         print("===================================")
         print("1. Ver Libros")
         print("2. Ver Películas")
         print("3. Ver Música")
         print("4. Regresar al Menú Principal")
         print("===================================")
+        opcion = input("Selecciona una opción (1-4): ")
 
-        opcion = input("Seleccione una opción (1-4): ").strip()
-        match opcion:
-            case "1":
-                listar_libros()
-            case "2":
-                listar_peliculas()
-            case "3":
-                listar_musica()
-            case "4":
-                break
-            case _:
-                print("❌ Opción inválida.")
-                pausar_pantalla()
+        if opcion == "1":
+            libros.listarLibros()
+        elif opcion == "2":
+            peliculas.listarPeliculas()
+        elif opcion == "3":
+            musica.listarMusica()
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
 
-# ---------------- MENÚ: GUARDAR Y CARGAR ---------------- #
-def menuGuardarCargar():
-    while True:
-        limpiar_pantalla()
-        print("===================================")
-        print("     Guardar y Cargar Colección     ")
-        print("===================================")
-        print("1. Guardar Colección Actual")
-        print("2. Cargar Colección Guardada")
-        print("3. Regresar al Menú Principal")
-        print("===================================")
-
-        opcion = input("Seleccione una opción (1-3): ").strip()
-        match opcion:
-            case "1":
-                print("💾 Guardando colecciones en JSON...")
-                pausar_pantalla()
-            case "2":
-                print("📂 Cargando colecciones...")
-                cargar_json(RUTA_LIBROS)
-                cargar_json(RUTA_PELICULAS)
-                cargar_json(RUTA_MUSICA)
-                pausar_pantalla()
-            case "3":
-                break
-            case _:
-                print("❌ Opción inválida.")
-                pausar_pantalla()

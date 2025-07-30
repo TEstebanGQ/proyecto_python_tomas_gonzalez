@@ -6,6 +6,16 @@ Aquí se definen todas las constantes y configuraciones del sistema.
 
 import os
 from datetime import datetime
+# 📂 config.py
+
+# ✅ Rutas de archivos JSON
+RUTA_LIBROS = "data/libros.json"
+RUTA_PELICULAS = "data/peliculas.json"
+RUTA_MUSICA = "data/musica.json"
+
+# ✅ Configuración general
+TITULO_APP = "Administrador de Colección"
+VERSION_APP = "1.0"
 
 # ================================
 # INFORMACIÓN DE LA APLICACIÓN

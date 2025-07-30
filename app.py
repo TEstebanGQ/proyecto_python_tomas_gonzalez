@@ -1,44 +1,42 @@
-from utils.screenControllers import limpiar_pantalla
+from utils.screenControllers import limpiarPantalla
 import controllers.mainmenu as mainmenu
-if __name__ == '__main__':
+from config import TITULO_APP
 
+def ejecutarAplicacion():
     menuPrincipal = [
-        "Añadir Nuevo Elemento",
+        "Añadir un Nuevo Elemento",
         "Ver Todos los Elementos",
-        "Buscar Elemento",
-        "Editar Elemento",
-        "Eliminar Elemento",
-        "Ver Elementos por Categoría",
+        "Buscar un Elemento",
+        "Editar un Elemento",
+        "Eliminar un Elemento",
+        "Ver elementos por categoria",
         "Guardar y Cargar Colección",
         "Salir"
     ]
 
     while True:
-        limpiar_pantalla()
-        print("==================================")
-        print("    Administrador de Colección    ")
-        print("==================================")
+        limpiarPantalla()
+        print("===================================")
+        print(f"     {TITULO_APP}        ")
+        print("===================================")
         for i, item in enumerate(menuPrincipal, start=1):
             print(f"{i}. {item}")
-        print("==================================")
+        print("===================================")
 
         try:
-            opcion = int(input("Ingrese una opción: "))
-            limpiar_pantalla()
+            opcion = int(input("Selecciona una opción (1-8): "))
+            limpiarPantalla()
 
             if opcion < 1 or opcion > len(menuPrincipal):
-                print("❌ Opción fuera de rango.")
-                input("Presione Enter para continuar...")
+                print("Opción fuera de rango.")
+                input("Presiona Enter para continuar...")
                 continue
-
-            print(f"➡ Ha seleccionado: {menuPrincipal[opcion - 1]}")
-            print("-" * 50)
 
             match opcion:
                 case 1:
                     mainmenu.menuNuevoElemento()
                 case 2:
-                    mainmenu.ListarElementos()
+                    mainmenu.listarElementos()
                 case 3:
                     mainmenu.menuBuscarElemento()
                 case 4:
@@ -50,16 +48,14 @@ if __name__ == '__main__':
                 case 7:
                     mainmenu.menuGuardarCargar()
                 case 8:
-                    limpiar_pantalla()
-                    print("=" * 70)
-                    print("Gracias por usar el Administrador de Colección de Libros/Películas/Música.")
-                    print("=" * 70)
+                    limpiarPantalla()
+                    print("===================================")
+                    print(" Gracias por usar la aplicación.  ")
+                    print("===================================")
                     break
-
         except ValueError:
-            limpiar_pantalla()
-            print("❌ Debe ingresar un número válido.")
-            input("Presione Enter para continuar...")
+            print("Debes ingresar un número válido.")
+            input("Presiona Enter para continuar...")
 
-
-    
+if __name__ == "__main__":
+    ejecutarAplicacion()
