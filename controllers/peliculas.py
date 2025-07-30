@@ -1,53 +1,51 @@
-from models.elemento import Elemento
-from utils.validata import obtener_entrada_valida, validar_valoracion, validar_texto_no_vacio
+import json
+import os
+from tabulate import tabulate
+from utils.screenControllers import limpiar_pantalla
 
-def crear_pelicula(coleccion, gestor_archivos):
-    """Crea una nueva película"""
-    print("=== AÑADIR NUEVA PELÍCULA ===")
-    
-    titulo = obtener_entrada_valida("Título de la película: ", 
-                                  lambda x: x if validar_texto_no_vacio(x, "título") else None)
-    
-    director = obtener_entrada_valida("Director: ", 
-                                    lambda x: x if validar_texto_no_vacio(x, "director") else None)
-    
-    genero = obtener_entrada_valida("Género: ", 
-                                  lambda x: x if validar_texto_no_vacio(x, "género") else None)
-    
-    print("Valoración (1-10, opcional - presiona Enter para omitir): ", end="")
-    valoracion_input = input()
-    valoracion = validar_valoracion(valoracion_input) if valoracion_input else None
-    
-    pelicula = Elemento(titulo, director, genero, valoracion, "película")
-    coleccion.append(pelicula)
-    
-    if gestor_archivos.guardar_coleccion(coleccion):
-        print(f"✅ Película '{titulo}' agregada exitosamente con ID: {pelicula.id}")
-    else:
-        print("❌ Error al guardar la película")
-    
-    input("Presione Enter para continuar...")
+DATA_PATH = "data/peliculas.json"
+os.makedirs("data", exist_ok=True)
 
-def listar_peliculas(coleccion):
-    """Lista todas las películas"""
-    peliculas = [elem for elem in coleccion if elem.tipo == "película"]
-    
+def cargar_peliculas():
+    if os.path.exists(DATA_PATH):
+        with open(DATA_PATH, "r", encoding="utf-8") as archivo:
+            return json.load(archivo)
+    return []
+
+def guardar_peliculas(peliculas):
+    with open(DATA_PATH, "w", encoding="utf-8") as archivo:
+        json.dump(peliculas, archivo, indent=4)
+
+def mostrar_peliculas():
+    peliculas = cargar_peliculas()
     if not peliculas:
-        print("No hay películas en la colección.")
-        input("Presione Enter para continuar...")
-        return
-    
-    print("=== PELÍCULAS EN LA COLECCIÓN ===")
-    print("-" * 80)
-    
-    for pelicula in peliculas:
-        valoracion_str = f"{pelicula.valoracion}/10" if pelicula.valoracion else "Sin valorar"
-        print(f"ID: {pelicula.id}")
-        print(f"Título: {pelicula.titulo}")
-        print(f"Director: {pelicula.autor_director_artista}")
-        print(f"Género: {pelicula.genero}")
-        print(f"Valoración: {valoracion_str}")
-        print(f"Agregado: {pelicula.fecha_agregado}")
-        print("-" * 80)
-    
-    input("Presione Enter para continuar...")
+        print("No hay películas registradas.")
+    else:
+        print(tabulate(peliculas, headers="keys", tablefmt="grid"))
+
+def agregar_pelicula():
+    limpiar_pantalla()
+    peliculas = cargar_peliculas()
+
+    titulo = input("Título de la película: ")
+    director = input("Director: ")
+
+    nueva_pelicula = {
+        "titulo": titulo,
+        "director": director
+    }
+    peliculas.append(nueva_pelicula)
+    guardar_peliculas(peliculas)
+    print("✅ Película agregada correctamente.")
+
+def eliminar_pelicula():
+    peliculas = cargar_peliculas()
+    mostrar_peliculas()
+
+    indice = int(input("Número de la película a eliminar: ")) - 1
+    if 0 <= indice < len(peliculas):
+        peliculas.pop(indice)
+        guardar_peliculas(peliculas)
+        print("✅ Película eliminada.")
+    else:
+        print("❌ Índice no válido.")
