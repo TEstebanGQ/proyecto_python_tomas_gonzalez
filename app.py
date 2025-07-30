@@ -1,29 +1,29 @@
 from utils.screenControllers import limpiar_pantalla
+import controllers.mainmenu as mainmenu
 if __name__ == '__main__':
 
  
     menuPrincipal = [
 
-        "Gestionar Equipos",
-        "Gestionar Jugadores",
-        "Transferencias de Jugadores",
-        "Gestionar Ligas",
-        "Gestionar Torneos",
-        "Ver Estadísticas",
-        "Gestionar Dirigentes",
-        "Gestionar Partidos",
-        "Salir del Sistema"
+        "Añadir Nuevo Elemento",
+        "Ver Todos los Elementos",
+        "Buscar Elemento",
+        "Editar Elemento",
+        "Eliminar Elemento",
+        "Ver Elementos por Categoría",
+        "Guadar y cargar Colección",
+        "Salir"
     ]
 
 
     while True:
         limpiar_pantalla()
-        print('=============================')
-        print('          Actividad          ')
-        print('=============================')
+        print('==================================')
+        print('    Administrador de Colección    ')   
+        print('==================================')
         for a, item in enumerate(menuPrincipal, start=1):
                 print(f'{a}, {item}')
-        print('=============================')
+        print('==================================')
         try:
             opcion = int(input("Ingrese una opción: "))
             limpiar_pantalla()
@@ -37,26 +37,24 @@ if __name__ == '__main__':
 
             match opcion:
                 case 1:
-                    pass
+                    mainmenu.menuNuevoElemento()
                 case 2:
-                    pass
+                    mainmenu.ListarElementos()
                 case 3:
-                    pass
+                    mainmenu.menuBuscarElemento()
                 case 4:
-                    pass
+                    mainmenu.menuEditarElemento()
                 case 5:
-                    pass
+                    mainmenu.menuEliminarElemento()
                 case 6:
-                    pass
+                    mainmenu.menuVerCategoria()
                 case 7:
-                    pass
+                    mainmenu.menuGuardarCargar()
                 case 8:
-                    pass
-                case 9:
                     limpiar_pantalla()
-                    print("=" * 60)
-                    print("Gracias .")
-                    print("=" * 60)
+                    print("=" * 70)
+                    print("Gracias por usar Administrador de Colección de Libros/Películas/Música.")
+                    print("=" * 70)
                     break
         except ValueError:
             limpiar_pantalla()
