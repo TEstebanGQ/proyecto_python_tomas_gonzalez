@@ -2,7 +2,7 @@ import json
 import os
 from tabulate import tabulate
 from utils.screenControllers import limpiar_pantalla
-
+from utils.screenControllers import pausar_pantalla
 # Ruta fija en la carpeta data
 DATA_PATH = "data/libros.json"
 
@@ -16,7 +16,7 @@ def cargar_libros():
             return json.load(archivo)
     return []
 
-# Guardar libros en JSON (sin hora)
+# Guardar libros en JSON
 def guardar_libros(libros):
     with open(DATA_PATH, "w", encoding="utf-8") as archivo:
         json.dump(libros, archivo, indent=4)
@@ -36,15 +36,35 @@ def agregar_libro():
 
     titulo = input("Título del libro: ")
     autor = input("Autor del libro: ")
+    
+    # Solicitar el género
+    genero = input("Género del libro: ")
 
-    nuevo_libro = {
-        "titulo": titulo,
-        "autor": autor
-        # Se eliminó cualquier referencia a 'hora'
-    }
-    libros.append(nuevo_libro)
-    guardar_libros(libros)
-    print("✅ Libro agregado correctamente.")
+    # Solicitar la valoración
+    while True:
+        try:
+            valoracion_input = input("Valoración (1-10, opcional - presiona Enter para omitir): ")
+            if valoracion_input.strip() == "":
+                valoracion = None  # Si el usuario presiona Enter, no se asigna valoración
+                break
+            valoracion = float(valoracion_input)
+            if 1 <= valoracion <= 10:
+                continue
+            else:
+                print("La valoración debe estar entre 1 y 10.")
+        except ValueError:
+            print("La valoración debe ser un número.")
+
+        nuevo_libro = {
+            "titulo": titulo,
+            "autor": autor,
+            "genero": genero,
+            "valoracion": valoracion  # Agregar la valoración al nuevo libro
+        }
+        libros.append(nuevo_libro)
+        guardar_libros(libros)
+        print("✅ Libro agregado correctamente.")
+        pausar_pantalla()
 
 # Eliminar un libro
 def eliminar_libro():

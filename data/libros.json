@@ -1,0 +1,24 @@
+[
+    {
+        "titulo": "cien a\u00f1os de soledad",
+        "autor": "gabriel garcia "
+    },
+    {
+        "titulo": "oscuro",
+        "autor": "gabriel",
+        "genero": "fantasia",
+        "valoracion": 9.0
+    },
+    {
+        "titulo": "ave maria",
+        "autor": "alfonso",
+        "genero": "creencias",
+        "valoracion": 10.0
+    },
+    {
+        "titulo": "un coronel",
+        "autor": "andres",
+        "genero": "realisno",
+        "valoracion": 10.0
+    }
+]

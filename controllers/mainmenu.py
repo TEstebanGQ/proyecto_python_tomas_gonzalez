@@ -12,7 +12,6 @@ def inicializar_coleccion():
     """Inicializa la colección cargando datos del archivo"""
     global coleccion
     coleccion = gestorArchivos.cargar_coleccion()
-
 def menuNuevoElemento():
     nuevoElemento = [
         'Libro',
@@ -44,7 +43,7 @@ def menuNuevoElemento():
 
             match opcion:
                 case 1:
-                    libros.crear_libro(coleccion, gestorArchivos)
+                    libros.agregar_libro()  # Cambiado de crear_libro a agregar_libro
                 case 2:
                     peliculas.crear_pelicula(coleccion, gestorArchivos)
                 case 3:
@@ -55,6 +54,7 @@ def menuNuevoElemento():
         except ValueError:
             print("Entrada inválida. Por favor, ingrese un número.")
             input("Presione Enter para continuar...")
+
 
 def ListarElementos():
     TodosElementos = [
