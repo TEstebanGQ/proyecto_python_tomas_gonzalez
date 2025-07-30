@@ -1,0 +1,29 @@
+[
+  {
+    "id": "a2e84e69",
+    "titulo": "CIEN AÑOS DE SOLEDAD",
+    "autor_director_artista": "GABRIEL GARCIA MARQUEZ",
+    "genero": "FANTASTICO",
+    "valoracion": 10.0,
+    "tipo": "libro",
+    "fecha_agregado": "2025-07-30 06:59:46"
+  },
+  {
+    "id": "3fe8940c",
+    "titulo": "MATRIZ",
+    "autor_director_artista": "JHON",
+    "genero": "0",
+    "valoracion": null,
+    "tipo": "película",
+    "fecha_agregado": "2025-07-30 07:00:33"
+  },
+  {
+    "id": "0edcc0fe",
+    "titulo": "8",
+    "autor_director_artista": "7",
+    "genero": "6",
+    "valoracion": 5.0,
+    "tipo": "música",
+    "fecha_agregado": "2025-07-30 07:01:02"
+  }
+]
