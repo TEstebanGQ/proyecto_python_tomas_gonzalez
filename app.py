@@ -27,7 +27,7 @@ def menu():
             limpiarPantalla()
 
             if opcion < 1 or opcion > len(menuPrincipal):
-                print("❌ Opción fuera de rango.")
+                print("Opción fuera de rango.")
                 input("Presione Enter para continuar...")
                 continue
 
@@ -52,13 +52,12 @@ def menu():
                 case 8:
                     limpiarPantalla()
                     print("===================================")
-                    print(" Gracias por usar el Administrador ")
-                    print("     de Colección. ¡Hasta luego!   ")
+                    print(" Gracias . ")
                     print("===================================")
                     break
         except ValueError:
             limpiarPantalla()
-            print("❌ Debe ingresar un número válido.")
+            print("Debe ingresar un número válido.")
             input("Presione Enter para continuar...")
 
 if __name__ == "__main__":

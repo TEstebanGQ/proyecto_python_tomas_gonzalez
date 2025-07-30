@@ -5,5 +5,12 @@
         "genero": "romantica",
         "valoracion": 10.0,
         "id": "00001"
+    },
+    {
+        "titulo": "hit",
+        "director": "galfield",
+        "genero": "comedia",
+        "valoracion": 5.9,
+        "id": "00002"
     }
 ]

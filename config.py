@@ -7,25 +7,18 @@ Define rutas, constantes y validaciones principales del sistema.
 import os
 import platform
 
-# ================================
-# RUTAS DE ARCHIVOS JSON
-# ================================
+
 RUTA_LIBROS = "data/libros.json"
 RUTA_PELICULAS = "data/peliculas.json"
 RUTA_MUSICA = "data/musica.json"
 
-# ================================
-# INFORMACIÓN DE LA APLICACIÓN
-# ================================
 NOMBRE_APP = "Administrador de Colección"
 VERSION = "1.0.0"
 DESCRIPCION = "Sistema de gestión de colecciones personales de libros, películas y música"
 AUTOR = "Tu Nombre"
 FECHA_CREACION = "2024"
 
-# ================================
-# TIPOS DE ELEMENTOS
-# ================================
+
 TIPOS_ELEMENTOS = {
     'libro': {
         'nombre': 'Libro',

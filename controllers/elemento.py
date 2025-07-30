@@ -2,8 +2,9 @@ from utils.coreFiles import cargarJson, guardarJson
 from utils.validata import validarSoloLetras, validarValoracion, generarId
 from utils.screenControllers import limpiarPantalla, pausarPantalla
 from tabulate import tabulate
+import data as data
 
-# ✅ Añadir elemento genérico
+
 def agregarElemento(ruta, tipoElemento, campos):
     limpiarPantalla()
     elementos = cargarJson(ruta)
@@ -13,7 +14,7 @@ def agregarElemento(ruta, tipoElemento, campos):
 
     for campo in campos:
         if campo == "valoracion":
-            datos[campo] = validarValoracion()  # Obligatoria
+            datos[campo] = validarValoracion()  # 
         else:
             etiqueta = obtenerEtiquetaCampo(tipoElemento, campo)
             datos[campo] = validarSoloLetras(f"Ingrese {etiqueta}: ")
@@ -21,7 +22,7 @@ def agregarElemento(ruta, tipoElemento, campos):
     datos["id"] = generarId(elementos)
     elementos.append(datos)
     guardarJson(ruta, elementos)
-    print(f"✅ {tipoElemento} agregado correctamente.")
+    print(f"{tipoElemento} agregado correctamente.")
     pausarPantalla()
 
 # ✅ Listar elementos con encabezados personalizados
@@ -35,9 +36,14 @@ def listarElementos(ruta, tipoElemento):
 
         # Encabezados personalizados según tipo
         headers = generarEncabezados(tipoElemento)
-
+        
         # Convertir datos a lista de filas en el orden correcto
-        filas = [[e["id"], e["titulo"], e["autor"], e["genero"], e["valoracion"]] for e in elementos]
+        filas = []
+        for e in elementos:
+            # Obtener el campo correcto (autor/director/artista)
+            campo_persona = obtenerCampoPersona(tipoElemento)
+            fila = [e["id"], e["titulo"], e.get(campo_persona, "N/A"), e["genero"], e["valoracion"]]
+            filas.append(fila)
 
         print(tabulate(filas, headers=headers, tablefmt="fancy_grid"))
     pausarPantalla()
@@ -46,20 +52,23 @@ def listarElementos(ruta, tipoElemento):
 def buscarElemento(ruta, tipoElemento):
     limpiarPantalla()
     elementos = cargarJson(ruta)
-    etiqueta = "título, " + obtenerEtiquetaCampo(tipoElemento, "autor") + " o género"
+    etiqueta = "título, " + obtenerEtiquetaCampo(tipoElemento, obtenerCampoPersona(tipoElemento)) + " o género"
     criterio = validarSoloLetras(f"Buscar en {tipoElemento} por {etiqueta}: ")
 
     encontrados = [e for e in elementos if any(criterio.lower() in str(v).lower() for k, v in e.items() if k != "id")]
 
     if encontrados:
         headers = generarEncabezados(tipoElemento)
-        filas = [[e["id"], e["titulo"], e["autor"], e["genero"], e["valoracion"]] for e in encontrados]
+        filas = []
+        for e in encontrados:
+            campo_persona = obtenerCampoPersona(tipoElemento)
+            fila = [e["id"], e["titulo"], e.get(campo_persona, "N/A"), e["genero"], e["valoracion"]]
+            filas.append(fila)
         print(tabulate(filas, headers=headers, tablefmt="fancy_grid"))
     else:
         print(f"⚠ No se encontraron {tipoElemento} con ese criterio.")
     pausarPantalla()
 
-# ✅ Editar elemento
 # ✅ Editar elemento (con encabezados correctos antes de editar)
 def editarElemento(ruta, tipoElemento, campos):
     limpiarPantalla()
@@ -73,7 +82,11 @@ def editarElemento(ruta, tipoElemento, campos):
 
     print(f"=== {tipoElemento} disponibles para editar ===")
     headers = generarEncabezados(tipoElemento)
-    filas = [[e["id"], e["titulo"], e["autor"], e["genero"], e["valoracion"]] for e in elementos]
+    filas = []
+    for e in elementos:
+        campo_persona = obtenerCampoPersona(tipoElemento)
+        fila = [e["id"], e["titulo"], e.get(campo_persona, "N/A"), e["genero"], e["valoracion"]]
+        filas.append(fila)
     print(tabulate(filas, headers=headers, tablefmt="fancy_grid"))
 
     # Seleccionar ID a editar
@@ -84,10 +97,12 @@ def editarElemento(ruta, tipoElemento, campos):
         for campo in campos:
             etiqueta = obtenerEtiquetaCampo(tipoElemento, campo)
             if campo == "valoracion":
-                nuevaVal = validarValoracion()  # Ahora obligatoria
-                elemento[campo] = nuevaVal
+                nuevaVal = validarValoracion(permitirVacio=True)  # Permitir vacío en edición
+                if nuevaVal is not None:
+                    elemento[campo] = nuevaVal
             else:
-                nuevaVal = validarSoloLetras(f"Nuevo {etiqueta} ({elemento[campo]}): ", permitirVacio=True)
+                valor_actual = elemento.get(campo, "N/A")
+                nuevaVal = validarSoloLetras(f"Nuevo {etiqueta} ({valor_actual}): ", permitirVacio=True)
                 if nuevaVal:
                     elemento[campo] = nuevaVal
 
@@ -96,7 +111,6 @@ def editarElemento(ruta, tipoElemento, campos):
     else:
         print(f"⚠ ID no encontrado en {tipoElemento}.")
     pausarPantalla()
-
 
 # ✅ Eliminar elemento (con encabezados correctos antes de eliminar)
 def eliminarElemento(ruta, tipoElemento):
@@ -112,7 +126,11 @@ def eliminarElemento(ruta, tipoElemento):
     # Mostrar lista con encabezados dinámicos
     print(f"=== {tipoElemento} disponibles para eliminar ===")
     headers = generarEncabezados(tipoElemento)
-    filas = [[e["id"], e["titulo"], e["autor"], e["genero"], e["valoracion"]] for e in elementos]
+    filas = []
+    for e in elementos:
+        campo_persona = obtenerCampoPersona(tipoElemento)
+        fila = [e["id"], e["titulo"], e.get(campo_persona, "N/A"), e["genero"], e["valoracion"]]
+        filas.append(fila)
     print(tabulate(filas, headers=headers, tablefmt="fancy_grid"))
 
     # Solicitar ID para eliminar
@@ -127,16 +145,24 @@ def eliminarElemento(ruta, tipoElemento):
         print(f"⚠ ID no encontrado en {tipoElemento}.")
     pausarPantalla()
 
+# ✅ Obtener el campo correcto según el tipo (autor/director/artista)
+def obtenerCampoPersona(tipoElemento):
+    if tipoElemento.lower() == "libro":
+        return "autor"
+    elif tipoElemento.lower() == "película":
+        return "director"  
+    elif tipoElemento.lower() == "música":
+        return "artista"
+    return "autor"  # Por defecto
 
 # ✅ Obtener etiqueta dinámica (Autor/Director/Artista)
 def obtenerEtiquetaCampo(tipoElemento, campo):
     if campo == "autor":
-        if tipoElemento.lower() == "libro":
-            return "Autor"
-        elif tipoElemento.lower() == "película":
-            return "Director"
-        elif tipoElemento.lower() == "música":
-            return "Artista"
+        return "Autor"
+    elif campo == "director":
+        return "Director"
+    elif campo == "artista":
+        return "Artista"
     elif campo == "genero":
         return "Género"
     elif campo == "titulo":
@@ -145,7 +171,7 @@ def obtenerEtiquetaCampo(tipoElemento, campo):
         return "Valoración"
     return campo
 
-# ✅ Generar encabezados dinámicos para la tabla
+
 def generarEncabezados(tipoElemento):
     if tipoElemento.lower() == "libro":
         return ["ID", "Título", "Autor", "Género", "Valoración"]
@@ -153,3 +179,4 @@ def generarEncabezados(tipoElemento):
         return ["ID", "Título", "Director", "Género", "Valoración"]
     elif tipoElemento.lower() == "música":
         return ["ID", "Título", "Artista", "Género", "Valoración"]
+    return ["ID", "Título", "Persona", "Género", "Valoración"]  # Por defecto
