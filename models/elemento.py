@@ -1,6 +1,4 @@
 
-# models/elemento.py
-from datetime import datetime
 import uuid
 
 class Elemento:
@@ -11,7 +9,7 @@ class Elemento:
         self.genero = genero
         self.valoracion = valoracion
         self.tipo = tipo  # libro, película, música
-        self.fecha_agregado = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
     
     def to_dict(self):
         return {
@@ -21,7 +19,7 @@ class Elemento:
             'genero': self.genero,
             'valoracion': self.valoracion,
             'tipo': self.tipo,
-            'fecha_agregado': self.fecha_agregado
+            
         }
     
     @classmethod
@@ -34,5 +32,4 @@ class Elemento:
             data['tipo']
         )
         elemento.id = data['id']
-        elemento.fecha_agregado = data.get('fecha_agregado', datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         return elemento

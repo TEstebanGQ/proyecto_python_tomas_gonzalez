@@ -1,18 +1,4 @@
-def validar_valoracion(valoracion_str):
-    """Valida que la valoración esté entre 1 y 10"""
-    if not valoracion_str.strip():
-        return None
-    
-    try:
-        valoracion = float(valoracion_str)
-        if 1 <= valoracion <= 10:
-            return valoracion
-        else:
-            print("La valoración debe estar entre 1 y 10")
-            return False
-    except ValueError:
-        print("La valoración debe ser un número")
-        return False
+import re
 
 def validar_texto_no_vacio(texto, campo):
     """Valida que el texto no esté vacío"""
@@ -34,3 +20,29 @@ def obtener_entrada_valida(prompt, validador=None):
                 return entrada.strip()
             else:
                 print("La entrada no puede estar vacía.")
+
+def validar_solo_letras(campo: str, nombre_campo: str) -> str:
+    """
+    Valida que la entrada solo contenga letras y espacios.
+    Retorna la cadena válida.
+    """
+    while True:
+        valor = input(f"{nombre_campo}: ").strip()
+        if valor != "" and re.fullmatch(r"[A-Za-zÁÉÍÓÚáéíóúÑñ ]+", valor):
+            return valor
+        print(f"❌ {nombre_campo} solo puede contener letras y espacios.")
+
+def validar_valoracion() -> float:
+    while True:
+        try:
+            valor = input("Valoración (1-10): ").strip()
+            if valor != "":
+                valor = float(valor)
+                if 1 <= valor <= 10:
+                    return valor
+                else:
+                    print("❌ La valoración debe estar entre 1 y 10.")
+            else:
+                print("❌ La valoración no puede estar vacía.")
+        except ValueError:
+            print("❌ La valoración debe ser un número válido.")
