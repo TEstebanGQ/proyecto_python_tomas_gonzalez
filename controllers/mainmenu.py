@@ -58,23 +58,102 @@ def listarElementos():
 def menuBuscarElemento():
     while True:
         limpiarPantalla()
+        print("===========================================")
+        print("        Buscar un Elemento")
+        print("===========================================")
+        print("¿Cómo deseas buscar?")
+        print("1. Buscar por Título")
+        print("2. Buscar por Autor/Director/Artista")
+        print("3. Buscar por Género")
+        print("4. Regresar al Menú Principal")
+        print("===========================================")
+
+        opcion = input("Selecciona una opción (1-4): ").strip()
+
+        if opcion == "1":
+            menuBuscarPorTitulo()
+        elif opcion == "2":
+            menuBuscarPorPersona()
+        elif opcion == "3":
+            menuBuscarPorGenero()
+        elif opcion == "4":
+            break
+        else:
+            print("❌ Opción inválida.")
+            pausarPantalla()
+
+def menuBuscarPorTitulo():
+    while True:
+        limpiarPantalla()
         print("===================================")
-        print("          Buscar un Elemento       ")
+        print("        Buscar por Título          ")
         print("===================================")
         print("1. Buscar en Libros")
         print("2. Buscar en Películas")
         print("3. Buscar en Música")
-        print("4. Regresar al Menú Principal")
+        print("4. Regresar")
         print("===================================")
 
         opcion = input("Seleccione una opción (1-4): ").strip()
 
         if opcion == "1":
-            elemento.buscarElemento(RUTA_LIBROS, "libro")
+            elemento.buscarElementoPorCampo(RUTA_LIBROS, "libro", "titulo")
         elif opcion == "2":
-            elemento.buscarElemento(RUTA_PELICULAS, "película")
+            elemento.buscarElementoPorCampo(RUTA_PELICULAS, "película", "titulo")
         elif opcion == "3":
-            elemento.buscarElemento(RUTA_MUSICA, "música")
+            elemento.buscarElementoPorCampo(RUTA_MUSICA, "música", "titulo")
+        elif opcion == "4":
+            break
+        else:
+            print("❌ Opción inválida.")
+            pausarPantalla()
+
+def menuBuscarPorPersona():
+    while True:
+        limpiarPantalla()
+        print("===================================")
+        print("   Buscar por Autor/Director/Artista")
+        print("===================================")
+        print("1. Buscar en Libros (por Autor)")
+        print("2. Buscar en Películas (por Director)")
+        print("3. Buscar en Música (por Artista)")
+        print("4. Regresar")
+        print("===================================")
+
+        opcion = input("Seleccione una opción (1-4): ").strip()
+
+        if opcion == "1":
+            elemento.buscarElementoPorCampo(RUTA_LIBROS, "libro", "autor")
+        elif opcion == "2":
+            elemento.buscarElementoPorCampo(RUTA_PELICULAS, "película", "director")
+        elif opcion == "3":
+            elemento.buscarElementoPorCampo(RUTA_MUSICA, "música", "artista")
+        elif opcion == "4":
+            break
+        else:
+            print("❌ Opción inválida.")
+            pausarPantalla()
+
+def menuBuscarPorGenero():
+    while True:
+        limpiarPantalla()
+        print("===================================")
+        print("        Buscar por Género          ")
+        print("===================================")
+        print("1. Buscar en Libros")
+        print("2. Buscar en Películas")
+        print("3. Buscar en Música")
+        print("4. Regresar")
+        print("===================================")
+
+        opcion = input("Seleccione una opción (1-4): ").strip()
+
+        if opcion == "1":
+            elemento.buscarElementoPorCampo(RUTA_LIBROS, "libro", "genero")
+        elif opcion == "2":
+            elemento.buscarElementoPorCampo(RUTA_PELICULAS, "película", "genero")
+        elif opcion == "3":
+            elemento.buscarElementoPorCampo(RUTA_MUSICA, "música", "genero")
         elif opcion == "4":
             break
         else:
@@ -84,23 +163,94 @@ def menuBuscarElemento():
 def menuEditarElemento():
     while True:
         limpiarPantalla()
-        print("===================================")
-        print("          Editar un Elemento       ")
-        print("===================================")
+        print("===========================================")
+        print("        Editar un Elemento")
+        print("===========================================")
+        print("¿Qué tipo de cambio deseas realizar?")
+        print("1. Editar Título")
+        print("2. Editar Autor/Director/Artista")
+        print("3. Editar Género")
+        print("4. Editar Valoración")
+        print("5. Regresar al Menú Principal")
+        print("===========================================")
+
+        opcion = input("Selecciona una opción (1-5): ").strip()
+
+        if opcion == "1":
+            menuEditarCampo("titulo")
+        elif opcion == "2":
+            menuEditarPersona()
+        elif opcion == "3":
+            menuEditarCampo("genero")
+        elif opcion == "4":
+            menuEditarCampo("valoracion")
+        elif opcion == "5":
+            break
+        else:
+            print("❌ Opción inválida.")
+            pausarPantalla()
+
+def menuEditarCampo(campo):
+    while True:
+        limpiarPantalla()
+        campo_texto = {
+            "titulo": "Título",
+            "genero": "Género", 
+            "valoracion": "Valoración"
+        }.get(campo, campo)
+        
+        print(f"===================================")
+        print(f"        Editar {campo_texto}")
+        print(f"===================================")
         print("1. Editar en Libros")
         print("2. Editar en Películas")
         print("3. Editar en Música")
-        print("4. Regresar al Menú Principal")
+        print("4. Regresar")
         print("===================================")
 
         opcion = input("Seleccione una opción (1-4): ").strip()
 
         if opcion == "1":
-            elemento.editarElemento(RUTA_LIBROS, "libro", ["titulo", "autor", "genero", "valoracion"])
+            if campo == "valoracion":
+                elemento.editarElementoCampoEspecifico(RUTA_LIBROS, "libro", ["autor"], campo)
+            else:
+                elemento.editarElementoCampoEspecifico(RUTA_LIBROS, "libro", ["autor"], campo)
         elif opcion == "2":
-            elemento.editarElemento(RUTA_PELICULAS, "película", ["titulo", "director", "genero", "valoracion"])
+            if campo == "valoracion":
+                elemento.editarElementoCampoEspecifico(RUTA_PELICULAS, "película", ["director"], campo)
+            else:
+                elemento.editarElementoCampoEspecifico(RUTA_PELICULAS, "película", ["director"], campo)
         elif opcion == "3":
-            elemento.editarElemento(RUTA_MUSICA, "música", ["titulo", "artista", "genero", "valoracion"])
+            if campo == "valoracion":
+                elemento.editarElementoCampoEspecifico(RUTA_MUSICA, "música", ["artista"], campo)
+            else:
+                elemento.editarElementoCampoEspecifico(RUTA_MUSICA, "música", ["artista"], campo)
+        elif opcion == "4":
+            break
+        else:
+            print("❌ Opción inválida.")
+            pausarPantalla()
+
+def menuEditarPersona():
+    while True:
+        limpiarPantalla()
+        print("===================================")
+        print("   Editar Autor/Director/Artista   ")
+        print("===================================")
+        print("1. Editar Autor (Libros)")
+        print("2. Editar Director (Películas)")
+        print("3. Editar Artista (Música)")
+        print("4. Regresar")
+        print("===================================")
+
+        opcion = input("Seleccione una opción (1-4): ").strip()
+
+        if opcion == "1":
+            elemento.editarElementoCampoEspecifico(RUTA_LIBROS, "libro", ["autor"], "autor")
+        elif opcion == "2":
+            elemento.editarElementoCampoEspecifico(RUTA_PELICULAS, "película", ["director"], "director")
+        elif opcion == "3":
+            elemento.editarElementoCampoEspecifico(RUTA_MUSICA, "música", ["artista"], "artista")
         elif opcion == "4":
             break
         else:
@@ -110,13 +260,63 @@ def menuEditarElemento():
 def menuEliminarElemento():
     while True:
         limpiarPantalla()
+        print("===========================================")
+        print("        Eliminar un Elemento")
+        print("===========================================")
+        print("¿Cómo deseas eliminar?")
+        print("1. Eliminar por Título")
+        print("2. Eliminar por Identificador Único")
+        print("3. Regresar al Menú Principal")
+        print("===========================================")
+
+        opcion = input("Selecciona una opción (1-3): ").strip()
+
+        if opcion == "1":
+            menuEliminarPorTitulo()
+        elif opcion == "2":
+            menuEliminarPorId()
+        elif opcion == "3":
+            break
+        else:
+            print("❌ Opción inválida.")
+            pausarPantalla()
+
+def menuEliminarPorTitulo():
+    while True:
+        limpiarPantalla()
         print("===================================")
-        print("          Eliminar un Elemento     ")
+        print("       Eliminar por Título         ")
         print("===================================")
         print("1. Eliminar en Libros")
         print("2. Eliminar en Películas")
         print("3. Eliminar en Música")
-        print("4. Regresar al Menú Principal")
+        print("4. Regresar")
+        print("===================================")
+
+        opcion = input("Seleccione una opción (1-4): ").strip()
+
+        if opcion == "1":
+            elemento.eliminarElementoPorTitulo(RUTA_LIBROS, "libro")
+        elif opcion == "2":
+            elemento.eliminarElementoPorTitulo(RUTA_PELICULAS, "película")
+        elif opcion == "3":
+            elemento.eliminarElementoPorTitulo(RUTA_MUSICA, "música")
+        elif opcion == "4":
+            break
+        else:
+            print("❌ Opción inválida.")
+            pausarPantalla()
+
+def menuEliminarPorId():
+    while True:
+        limpiarPantalla()
+        print("===================================")
+        print("    Eliminar por ID")
+        print("===================================")
+        print("1. Eliminar en Libros")
+        print("2. Eliminar en Películas")
+        print("3. Eliminar en Música")
+        print("4. Regresar")
         print("===================================")
 
         opcion = input("Seleccione una opción (1-4): ").strip()
@@ -136,16 +336,17 @@ def menuEliminarElemento():
 def menuVerCategoria():
     while True:
         limpiarPantalla()
-        print("===================================")
-        print("      Ver Elementos por Categoría  ")
-        print("===================================")
-        print("1. Libros")
-        print("2. Películas")
-        print("3. Música")
+        print("===========================================")
+        print("        Ver Elementos por Categoría")
+        print("===========================================")
+        print("¿Qué categoría deseas ver?")
+        print("1. Ver Libros")
+        print("2. Ver Películas")
+        print("3. Ver Música")
         print("4. Regresar al Menú Principal")
-        print("===================================")
+        print("===========================================")
 
-        opcion = input("Seleccione una opción (1-4): ").strip()
+        opcion = input("Selecciona una opción (1-4): ").strip()
 
         if opcion == "1":
             elemento.listarElementos(RUTA_LIBROS, "libro")
