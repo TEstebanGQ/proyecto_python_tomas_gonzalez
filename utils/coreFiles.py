@@ -1,7 +1,6 @@
 import json
 import os
 
-# ✅ Cargar datos desde un archivo JSON
 def cargarJson(ruta):
     if not os.path.exists(ruta):
         return [] 
@@ -14,6 +13,6 @@ def cargarJson(ruta):
         return []  
     
 def guardarJson(ruta, datos):
-    os.makedirs(os.path.dirname(ruta), exist_ok=True)  # Crear carpeta si no existe
+    os.makedirs(os.path.dirname(ruta), exist_ok=True)  
     with open(ruta, "w", encoding="utf-8") as archivo:
         json.dump(datos, archivo, indent=4, ensure_ascii=False)

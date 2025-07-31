@@ -12,13 +12,6 @@ RUTA_LIBROS = "data/libros.json"
 RUTA_PELICULAS = "data/peliculas.json"
 RUTA_MUSICA = "data/musica.json"
 
-NOMBRE_APP = "Administrador de Colección"
-VERSION = "1.0.0"
-DESCRIPCION = "Sistema de gestión de colecciones personales de libros, películas y música"
-AUTOR = "Tu Nombre"
-FECHA_CREACION = "2024"
-
-
 TIPOS_ELEMENTOS = {
     'libro': {
         'nombre': 'Libro',
@@ -49,39 +42,29 @@ TIPOS_ELEMENTOS = {
     }
 }
 
-# ================================
-# CONFIGURACIÓN DE VALORACIONES
-# ================================
+
 VALORACION_MIN = 1
 VALORACION_MAX = 10
 
-# ================================
-# VALIDACIONES
-# ================================
+
 LONGITUD_CAMPOS = {
     'titulo': {'min': 1, 'max': 200},
     'autor_director_artista': {'min': 1, 'max': 100},
     'genero': {'min': 1, 'max': 50}
 }
 
-# ================================
-# SISTEMA OPERATIVO
-# ================================
 SISTEMA_OPERATIVO = platform.system().lower()
 if SISTEMA_OPERATIVO == 'windows':
     COMANDO_LIMPIAR = 'cls'
     COMANDO_PAUSA = 'pause'
-else:  # Linux, macOS, etc.
+else:  
     COMANDO_LIMPIAR = 'clear'
     COMANDO_PAUSA = 'read -p \"Presione Enter para continuar...\"'
 
-# ================================
-# CREACIÓN DE DIRECTORIOS
-# ================================
 def crearDirectorios():
     """Crea la carpeta data si no existe"""
     if not os.path.exists("data"):
         os.makedirs("data")
 
-# Crear directorios al importar
+
 crearDirectorios()

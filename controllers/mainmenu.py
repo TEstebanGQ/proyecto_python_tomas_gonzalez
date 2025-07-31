@@ -6,14 +6,15 @@ from config import RUTA_LIBROS, RUTA_PELICULAS, RUTA_MUSICA
 def menuNuevoElemento():
     while True:
         limpiarPantalla()
-        print("===================================")
+        print("=====================================")
         print("        Añadir un Nuevo Elemento   ")
-        print("===================================")
+        print("=====================================")
+        print("¿Que tipo de elemento deseas añadir?")
         print("1. Libro")
         print("2. Película")
         print("3. Música")
         print("4. Regresar al Menú Principal")
-        print("===================================")
+        print("=====================================")
 
         opcion = input("Seleccione una opción (1-4): ").strip()
 
@@ -26,7 +27,7 @@ def menuNuevoElemento():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.   ")
             pausarPantalla()
 
 def listarElementos():
@@ -35,6 +36,7 @@ def listarElementos():
         print("===================================")
         print("        Ver Todos los Elementos    ")
         print("===================================")
+        print("¿Que categoria deseas ver?")
         print("1. Libros")
         print("2. Películas")
         print("3. Música")
@@ -52,7 +54,7 @@ def listarElementos():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.  ")
             pausarPantalla()
 
 def menuBuscarElemento():
@@ -79,7 +81,7 @@ def menuBuscarElemento():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.  ")
             pausarPantalla()
 
 def menuBuscarPorTitulo():
@@ -105,7 +107,7 @@ def menuBuscarPorTitulo():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.   ")
             pausarPantalla()
 
 def menuBuscarPorPersona():
@@ -131,7 +133,7 @@ def menuBuscarPorPersona():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuBuscarPorGenero():
@@ -157,7 +159,7 @@ def menuBuscarPorGenero():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print(" Opción inválida.")
             pausarPantalla()
 
 def menuEditarElemento():
@@ -187,20 +189,20 @@ def menuEditarElemento():
         elif opcion == "5":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuEditarCampo(campo):
     while True:
         limpiarPantalla()
-        campo_texto = {
+        campoTexto = {
             "titulo": "Título",
             "genero": "Género", 
             "valoracion": "Valoración"
         }.get(campo, campo)
         
         print(f"===================================")
-        print(f"        Editar {campo_texto}")
+        print(f"        Editar {campoTexto}")
         print(f"===================================")
         print("1. Editar en Libros")
         print("2. Editar en Películas")
@@ -228,7 +230,7 @@ def menuEditarCampo(campo):
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuEditarPersona():
@@ -254,7 +256,7 @@ def menuEditarPersona():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuEliminarElemento():
@@ -278,7 +280,7 @@ def menuEliminarElemento():
         elif opcion == "3":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuEliminarPorTitulo():
@@ -304,7 +306,7 @@ def menuEliminarPorTitulo():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuEliminarPorId():
@@ -330,7 +332,7 @@ def menuEliminarPorId():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuVerCategoria():
@@ -357,7 +359,7 @@ def menuVerCategoria():
         elif opcion == "4":
             break
         else:
-            print("❌ Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
 
 def menuGuardarCargar():
@@ -374,16 +376,16 @@ def menuGuardarCargar():
         opcion = input("Seleccione una opción (1-3): ").strip()
 
         if opcion == "1":
-            print("💾 Colección guardada automáticamente al modificar datos.")
+            print("Colección guardada automáticamente al modificar datos.")
             pausarPantalla()
         elif opcion == "2":
             cargarJson(RUTA_LIBROS)
             cargarJson(RUTA_PELICULAS)
             cargarJson(RUTA_MUSICA)
-            print("📂 Colección cargada correctamente.")
+            print(" Colección cargada correctamente.")
             pausarPantalla()
         elif opcion == "3":
             break
         else:
-            print("❌ Opción inválida.")
+            print(" Opción inválida.")
             pausarPantalla()
