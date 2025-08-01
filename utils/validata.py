@@ -1,48 +1,36 @@
 import re
-
+from config import VALORACION_MIN, VALORACION_MAX
 
 def validarSoloLetras(mensaje, permitirVacio=False):
     while True:
         valor = input(mensaje).strip()
         if permitirVacio and valor == "":
-            return ""  
-
+            return ""
         if re.fullmatch(r"[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+", valor):
             return valor
         print("Entrada inválida. Solo se permiten letras y espacios.")
 
-
-def validarSoloNumeros(mensaje, permitirVacio=False):
-    while True:
-        valor = input(mensaje).strip()
-        if permitirVacio and valor == "":
-            return ""  
-        if valor.isdigit():
-            return valor
-        print("Entrada inválida. Solo se permiten números.")
-
-
 def validarValoracion(permitirVacio=False):
     while True:
-        valor = input("Ingrese la valoración (1-5): ").strip()
-
-
+        valor = input(f"Ingrese la valoración ({VALORACION_MIN}-{VALORACION_MAX}): ").strip()
+        
         if permitirVacio and valor == "":
-            return None  
+            return None
         if valor == "":
-            print("La valoración es obligatoria. Ingrese un número entre 1 y 5.")
+            print(f"La valoración es obligatoria. Ingrese un número entre {VALORACION_MIN} y {VALORACION_MAX}.")
             continue
 
-        if valor.replace('.', '', 1).isdigit():  
-            valor = float(valor)
-            if 1 <= valor <= 5:
-                return valor
-        print(" La valoración debe ser un número entre 1 y 5.")
+        try:
+            valor_float = float(valor)
+            if VALORACION_MIN <= valor_float <= VALORACION_MAX:
+                return valor_float
+            else:
+                print(f"La valoración debe ser un número entre {VALORACION_MIN} y {VALORACION_MAX}.")
+        except ValueError:
+            print(f"La valoración debe ser un número entre {VALORACION_MIN} y {VALORACION_MAX}.")
 
 def generarId(lista):
     if not lista:
-        return "00001"  
-    else:
-        ultimoId = max(int(item["id"]) for item in lista)
-        nuevoId = str(ultimoId + 1).zfill(5)  
-        return nuevoId
+        return "00001"
+    ultimo_id = max(int(item["id"]) for item in lista)
+    return str(ultimo_id + 1).zfill(5)

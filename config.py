@@ -1,70 +1,52 @@
-# config.py - Configuraciones del Administrador de Colección
-"""
-Archivo de configuración centralizada para el Administrador de Colección.
-Define rutas, constantes y validaciones principales del sistema.
-"""
 
 import os
-import platform
-
 
 RUTA_LIBROS = "data/libros.json"
 RUTA_PELICULAS = "data/peliculas.json"
 RUTA_MUSICA = "data/musica.json"
+RUTA_COLECCIONES = "data/colecciones.json"
 
 TIPOS_ELEMENTOS = {
     'libro': {
         'nombre': 'Libro',
-        'plural': 'Libros',
-        'emoji': '📚',
-        'campos': {
-            'autor_director_artista': 'Autor',
-            'genero': 'Género literario'
-        }
+        'plural': 'Libros', 
+        'ruta': RUTA_LIBROS,
+        'campos': ['titulo', 'autor', 'genero', 'valoracion'],
+        'campo_persona': 'autor',
+        'etiqueta_persona': 'Autor'
     },
     'película': {
         'nombre': 'Película',
         'plural': 'Películas',
-        'emoji': '🎬',
-        'campos': {
-            'autor_director_artista': 'Director',
-            'genero': 'Género cinematográfico'
-        }
+        'ruta': RUTA_PELICULAS, 
+        'campos': ['titulo', 'director', 'genero', 'valoracion'],
+        'campo_persona': 'director',
+        'etiqueta_persona': 'Director'
     },
     'música': {
         'nombre': 'Música',
         'plural': 'Música',
-        'emoji': '🎵',
-        'campos': {
-            'autor_director_artista': 'Artista',
-            'genero': 'Género musical'
-        }
+        'ruta': RUTA_MUSICA,
+        'campos': ['titulo', 'artista', 'genero', 'valoracion'], 
+        'campo_persona': 'artista',
+        'etiqueta_persona': 'Artista'
     }
 }
 
-
 VALORACION_MIN = 1
-VALORACION_MAX = 10
+VALORACION_MAX = 5
 
-
-LONGITUD_CAMPOS = {
-    'titulo': {'min': 1, 'max': 200},
-    'autor_director_artista': {'min': 1, 'max': 100},
-    'genero': {'min': 1, 'max': 50}
+ETIQUETAS_CAMPOS = {
+    'titulo': 'Título',
+    'autor': 'Autor', 
+    'director': 'Director',
+    'artista': 'Artista',
+    'genero': 'Género',
+    'valoracion': 'Valoración'
 }
 
-SISTEMA_OPERATIVO = platform.system().lower()
-if SISTEMA_OPERATIVO == 'windows':
-    COMANDO_LIMPIAR = 'cls'
-    COMANDO_PAUSA = 'pause'
-else:  
-    COMANDO_LIMPIAR = 'clear'
-    COMANDO_PAUSA = 'read -p \"Presione Enter para continuar...\"'
+
 
 def crearDirectorios():
-    """Crea la carpeta data si no existe"""
-    if not os.path.exists("data"):
-        os.makedirs("data")
-
-
+    os.makedirs("data", exist_ok=True)
 crearDirectorios()
