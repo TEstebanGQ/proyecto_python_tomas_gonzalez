@@ -1,63 +1,147 @@
-### 📋 Menú Principal (`mainMenu()`)
 
-Desde aquí puedes:
+# Python proyecto: Administrador de Colección
 
-1. **📚 Libros** – Ir al submenú de libros.
-2. **🎬 Películas** – Ir al submenú de películas.
-3. **🎵 Música** – Ir al submenú de música.
-4. **💾 Guardar colección** – Guarda todos los elementos actuales (libros, películas y música) como una colección completa en `colecciones.json`.
-5. **📂 Cargar colección** – Muestra una lista de colecciones guardadas para cargar una de ellas. Reemplaza los datos actuales.
-6. **🚪 Salir** – Cierra el programa.
+Un sistema de gestión completo para organizar tu colección personal de libros, películas y música. Desarrollado en Python con una interfaz de consola intuitiva y almacenamiento en archivos JSON.
 
-------
+##  Características Principales
 
-### 📚 Submenú Libros (`menuLibros()`)
+- **Gestión de múltiples tipos de elementos**: Libros, películas y música
+- **CRUD completo**: Crear, leer, actualizar y eliminar elementos
+- **Búsqueda avanzada**: Por título, autor/director/artista o género
+- **Sistema de valoraciones**: Califica tus elementos del 1 al 5
+- **Colecciones**: Guarda y carga conjuntos completos de elementos
+- **Interfaz intuitiva**: Menús organizados y navegación sencilla Instalación
 
-Este menú permite gestionar los libros:
+### Dependencias
 
-1. **➕ Agregar libro** – Pide al usuario los datos de un nuevo libro (nombre, autor, género, etc.) y lo guarda en `libros.json`.
-2. **📋 Mostrar libros** – Muestra en pantalla todos los libros que se han guardado.
-3. **⬅ Volver** – Retorna al menú principal.
+```bash
+pip install tabulate
+```
 
-------
+### Configuración
 
-### 🎬 Submenú Películas (`menuPeliculas()`)
+1. Clona o descarga el repositorio
+2. Navega al directorio del proyecto
+3. Ejecuta la aplicación:
 
-Este menú es igual al de libros, pero enfocado en películas:
+```bash
+python app.py
+```
 
-1. **➕ Agregar película** – Pide al usuario nombre, director, género, año, etc.
-2. **📋 Mostrar películas** – Muestra todas las películas registradas en el sistema.
-3. **⬅ Volver** – Regresa al menú principal.
+## 📁 Estructura del Proyecto
 
-------
+```
+administrador-coleccion/
+│
+├── app.py                     # Punto de entrada principal
+├── config.py                  # Configuración y constantes
+├── README.md                  # Este archivo
+│
+├── controllers/
+│   ├── mainmenu.py           # Controladores de menús
+│   └── elemento.py           # Lógica de gestión de elementos
+│
+├── utils/
+│   ├── coreFiles.py          # Manejo de archivos JSON
+│   ├── screenControllers.py  # Control de pantalla
+│   └── validata.py           # Validaciones de entrada
+│
+└── data/
+    ├── libros.json           # Almacenamiento de libros
+    ├── peliculas.json        # Almacenamiento de películas
+    ├── musica.json           # Almacenamiento de música
+    └── colecciones.json      # Colecciones guardadas
+```
 
-### 🎵 Submenú Música (`menuMusica()`)
+## Funcionalidades
 
-También similar al anterior, para gestionar canciones o álbumes musicales:
+### 1. 📋 Menú Principal
 
-1. **➕ Agregar música** – Solicita título, artista, género, duración, etc.
-2. **📋 Mostrar música** – Lista todas las canciones o registros musicales.
-3. **⬅ Volver** – Vuelve al menú principal.
+- **Añadir Nuevo Elemento**: Agregar libros, películas o música
+- **Ver Todos los Elementos**: Listar elementos por categoría
+- **Buscar Elemento**: Búsqueda por diferentes criterios
+- **Editar Elemento**: Modificar información existente
+- **Eliminar Elemento**: Remover elementos por ID o título
+- **Ver Elementos por Categoría**: Filtrado avanzado
+- **Guardar y Cargar Colección**: Gestión de colecciones
+- **Salir**: Cierre seguro de la aplicación
 
-------
+### 2. 📚 Gestión de Libros
 
-### 💾 Submenú Guardar Colección (`guardarColeccion()`)
+- **Campos**: Título, Autor, Género, Valoración
+- **Funciones**: Agregar, listar, buscar, editar, eliminar
 
-- Este menú guarda todos los elementos actuales (libros, películas y música) en un archivo llamado `colecciones.json`.
-- Se solicita un **nombre para la colección**, por ejemplo: "Favoritos2025".
-- Guarda la colección completa con ese nombre.
+### 3. 🎬 Gestión de Películas
 
-------
+- **Campos**: Título, Director, Género, Valoración
+- **Funciones**: Agregar, listar, buscar, editar, eliminar
 
-### 📂 Submenú Cargar Colección (`cargarColeccion()`)
+### 4. 🎵 Gestión de Música
 
-- Muestra todas las colecciones guardadas en `colecciones.json` (cada una con un número).
-- El usuario elige una colección por **número**.
-- Carga los datos de esa colección y sobrescribe los archivos individuales (`libros.json`, `peliculas.json`, `musica.json`) con esa información.
+- **Campos**: Título, Artista, Género, Valoración
+- **Funciones**: Agregar, listar, buscar, editar, eliminar
 
-------
+### 5. 🔍 Sistema de Búsqueda
 
-### 🔐 Validaciones
+- **Por Título**: Búsqueda parcial en títulos
+- **Por Persona**: Búsqueda por autor, director o artista
+- **Por Género**: Filtrado por categoría
 
-- El sistema valida que los nombres no estén vacíos, que los números sean correctos y que no se repitan entradas innecesariamente.
-- Si introduces algo incorrecto, te vuelve a pedir el dato.
+### 6. ✏️ Edición de Elementos
+
+- **Edición selectiva**: Modifica campos específicos
+- **Validación**: Mantiene la integridad de los datos
+- **Confirmación**: Proceso seguro de actualización
+
+### 7. 🗑️ Eliminación de Elementos
+
+- **Por ID**: Eliminación precisa usando identificador único
+- **Por Título**: Eliminación con búsqueda por nombre
+- **Confirmación**: Proceso seguro con confirmación del usuario
+
+### 8. 💾 Sistema de Colecciones
+
+- **Guardar Colección**: Crea una instantánea completa de todos los elementos
+- **Cargar Colección**: Restaura una colección previamente guardada
+- **Listar Colecciones**: Ve todas las colecciones disponibles
+- **Sobrescritura**: Gestiona colecciones duplicadas
+
+## 🛡️ Validaciones
+
+- **Solo letras y espacios**: Para nombres, títulos, géneros, etc.
+- **Valoraciones numéricas**: Entre 1 y 5 (acepta decimales)
+- **Campos obligatorios**: Previene entradas vacías
+- **IDs únicos**: Generación automática de identificadores
+- **Archivos seguros**: Manejo robusto de archivos JSON
+
+## 📊 Visualización de Datos
+
+El sistema utiliza la librería `tabulate` para mostrar los datos en formato de tabla con:
+
+- Encabezados claros
+- Formato de rejilla 
+- Información organizada por columnas
+- ID únicos para cada elemento
+
+### Estructura de Datos
+
+```json
+{
+    "titulo": "Ejemplo",
+    "autor/director/artista": "Creador",
+    "genero": "Categoría",
+    "valoracion": 4.5,
+    "id": "00001"
+}
+```
+
+## 🎨 Interfaz de Usuario
+
+- **Mensajes informativos**: Confirmaciones y estados claros
+- **Multiplataforma**: Compatible con Windows, Linux y macOS
+
+## 👨‍💻 Autor
+
+Nombre: Tomas Esteban Gonzalez Quintero
+
+Grupo: J-3
