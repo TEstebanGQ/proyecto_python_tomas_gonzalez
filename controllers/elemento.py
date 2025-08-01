@@ -241,6 +241,8 @@ def eliminarElemento(ruta, tipoElemento):
     else:
         print(f"⚠ ID no encontrado en {tipoElemento}.")
 
+
+
 def eliminarElementoPorTitulo(ruta, tipoElemento):
     limpiarPantalla()
     elementos = cargarJson(ruta)
@@ -299,5 +301,200 @@ def eliminarElementoPorTitulo(ruta, tipoElemento):
                 print("Eliminación cancelada.")
         else:
             print("⚠ ID no válido.")
+    
+    pausarPantalla()
+
+# Agregar esta función al final del archivo controllers/elemento.py
+
+def filtrarPorGenero(ruta, tipoElemento):
+    """Busca y filtra elementos por género - igual que la función buscar pero específica para géneros"""
+    limpiarPantalla()
+    elementos = cargarJson(ruta)
+    
+    if not elementos:
+        print(f"⚠ No hay {tipoElemento} registrados.")
+        pausarPantalla()
+        return
+    # Pedir al usuario que ingrese el género (igual que buscar)
+    etiqueta = obtenerEtiquetaCampo(tipoElemento, "genero")
+    criterio = validarSoloLetras(f"Buscar {tipoElemento} por {etiqueta}: ")
+
+    # Buscar elementos que coincidan con el género ingresado
+    encontrados = [e for e in elementos if criterio.lower() in str(e.get("genero", "")).lower()]
+
+    if encontrados:
+        print(f"=== {tipoElemento} encontrados por {etiqueta} ===")
+        headers = generarEncabezados(tipoElemento)
+        filas = []
+        for e in encontrados:
+            campo_persona = obtenerCampoPersona(tipoElemento)
+            fila = [e["id"], e["titulo"], e.get(campo_persona, "N/A"), e["genero"], e["valoracion"]]
+            filas.append(fila)
+        print(tabulate(filas, headers=headers, tablefmt="fancy_grid"))
+        
+    else:
+        print(f"No se encontraron {tipoElemento} que contengan '{criterio}' en {etiqueta}.")
+    pausarPantalla()
+# Agregar estas funciones al final del archivo controllers/elemento.py
+
+def guardarColeccion():
+    """Guarda toda la colección (libros, películas, música) en un archivo de colecciones"""
+    from config import RUTA_LIBROS, RUTA_PELICULAS, RUTA_MUSICA
+    from utils.validata import validarSoloLetras
+    import os
+    
+    limpiarPantalla()
+    print("=== Guardar Colección ===")
+    
+    # Cargar todos los datos actuales
+    libros = cargarJson(RUTA_LIBROS)
+    peliculas = cargarJson(RUTA_PELICULAS)
+    musica = cargarJson(RUTA_MUSICA)
+    
+    # Verificar si hay datos para guardar
+    total_elementos = len(libros) + len(peliculas) + len(musica)
+    if total_elementos == 0:
+        print("⚠ No hay elementos para guardar. La colección está vacía.")
+        pausarPantalla()
+        return
+    
+    # Pedir nombre de la colección
+    nombre_coleccion = validarSoloLetras("Ingrese el nombre de la colección: ")
+    
+    # Crear la estructura de datos para guardar
+    coleccion = {
+        "nombre": nombre_coleccion,
+        "libros": libros,
+        "peliculas": peliculas,
+        "musica": musica
+    }
+    
+    # Cargar colecciones existentes
+    ruta_colecciones = "data/colecciones.json"
+    colecciones_existentes = cargarJson(ruta_colecciones)
+    
+    # Buscar si ya existe una colección con ese nombre
+    coleccion_existente = None
+    for i, col in enumerate(colecciones_existentes):
+        if col.get("nombre", "").lower() == nombre_coleccion.lower():
+            coleccion_existente = i
+            break
+    
+    # Si existe, preguntar si desea sobrescribir
+    if coleccion_existente is not None:
+        respuesta = input(f"Ya existe una colección llamada '{nombre_coleccion}'. ¿Desea sobrescribirla? (s/n): ").strip().lower()
+        if respuesta == 's':
+            colecciones_existentes[coleccion_existente] = coleccion
+            print(f"Colección '{nombre_coleccion}' sobrescrita correctamente.")
+        else:
+            print("Guardado cancelado.")
+            pausarPantalla()
+            return
+    else:
+        # Agregar nueva colección
+        colecciones_existentes.append(coleccion)
+        print(f"Colección '{nombre_coleccion}' guardada correctamente.")
+    
+    # Guardar en el archivo de colecciones
+    guardarJson(ruta_colecciones, colecciones_existentes)
+    
+    print(f"Total de elementos guardados: {total_elementos}")
+    print(f"- Libros: {len(libros)}")
+    print(f"- Películas: {len(peliculas)}")  
+    print(f"- Música: {len(musica)}")
+    pausarPantalla()
+
+def cargarColeccion():
+    """Carga una colección específica y restaura los datos en los archivos individuales"""
+    from config import RUTA_LIBROS, RUTA_PELICULAS, RUTA_MUSICA
+    from utils.validata import validarSoloLetras
+    
+    limpiarPantalla()
+    print("=== Cargar Colección ===")
+    
+    # Cargar colecciones existentes
+    ruta_colecciones = "data/colecciones.json"
+    colecciones_existentes = cargarJson(ruta_colecciones)
+    
+    if not colecciones_existentes:
+        print("⚠ No hay colecciones guardadas.")
+        pausarPantalla()
+        return
+    
+    # Mostrar colecciones disponibles
+    print("Colecciones disponibles:")
+    for i, coleccion in enumerate(colecciones_existentes, 1):
+        nombre = coleccion.get("nombre", f"Colección {i}")
+        libros_count = len(coleccion.get("libros", []))
+        peliculas_count = len(coleccion.get("peliculas", []))
+        musica_count = len(coleccion.get("musica", []))
+        total = libros_count + peliculas_count + musica_count
+        print(f"{i}. {nombre} ({total} elementos)")
+    print("=" * 40)
+    
+    # Pedir nombre de la colección a cargar
+    nombre_coleccion = validarSoloLetras("Ingrese el nombre de la colección a cargar: ")
+    
+    # Buscar la colección
+    coleccion_encontrada = None
+    for coleccion in colecciones_existentes:
+        if coleccion.get("nombre", "").lower() == nombre_coleccion.lower():
+            coleccion_encontrada = coleccion
+            break
+    
+    if not coleccion_encontrada:
+        print(f"⚠ No se encontró una colección llamada '{nombre_coleccion}'.")
+        pausarPantalla()
+        return
+    
+    # Confirmar carga (esto sobrescribirá los datos actuales)
+    respuesta = input("⚠ Esto sobrescribirá todos los datos actuales. ¿Continuar? (s/n): ").strip().lower()
+    if respuesta != 's':
+        print("Carga cancelada.")
+        pausarPantalla()
+        return
+    
+    # Cargar los datos de la colección
+    libros = coleccion_encontrada.get("libros", [])
+    peliculas = coleccion_encontrada.get("peliculas", [])
+    musica = coleccion_encontrada.get("musica", [])
+    
+    # Guardar en los archivos individuales
+    guardarJson(RUTA_LIBROS, libros)
+    guardarJson(RUTA_PELICULAS, peliculas)
+    guardarJson(RUTA_MUSICA, musica)
+    
+    print(f"Colección '{nombre_coleccion}' cargada correctamente.")
+    print(f"- Libros cargados: {len(libros)}")
+    print(f"- Películas cargadas: {len(peliculas)}")
+    print(f"- Música cargada: {len(musica)}")
+    pausarPantalla()
+
+def listarColecciones():
+    """Lista todas las colecciones guardadas con detalles"""
+    limpiarPantalla()
+    print("=== Colecciones Guardadas ===")
+    
+    ruta_colecciones = "data/colecciones.json"
+    colecciones_existentes = cargarJson(ruta_colecciones)
+    
+    if not colecciones_existentes:
+        print("⚠ No hay colecciones guardadas.")
+        pausarPantalla()
+        return
+    
+    for i, coleccion in enumerate(colecciones_existentes, 1):
+        nombre = coleccion.get("nombre", f"Colección {i}")
+        libros = len(coleccion.get("libros", []))
+        peliculas = len(coleccion.get("peliculas", []))
+        musica = len(coleccion.get("musica", []))
+        total = libros + peliculas + musica
+        
+        print(f"{i}. {nombre}")
+        print(f"   - Libros: {libros}")
+        print(f"   - Películas: {peliculas}")
+        print(f"   - Música: {musica}")
+        print(f"   - Total: {total} elementos")
+        print("-" * 30)
     
     pausarPantalla()

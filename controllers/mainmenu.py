@@ -334,6 +334,7 @@ def menuEliminarPorId():
         else:
             print("Opción inválida.")
             pausarPantalla()
+# Reemplazar la función menuVerCategoria() en controllers/mainmenu.py por esta:
 
 def menuVerCategoria():
     while True:
@@ -342,25 +343,110 @@ def menuVerCategoria():
         print("        Ver Elementos por Categoría")
         print("===========================================")
         print("¿Qué categoría deseas ver?")
-        print("1. Ver Libros")
-        print("2. Ver Películas")
-        print("3. Ver Música")
+        print("1. Libros")
+        print("2. Películas")
+        print("3. Música")
         print("4. Regresar al Menú Principal")
         print("===========================================")
 
         opcion = input("Selecciona una opción (1-4): ").strip()
 
         if opcion == "1":
-            elemento.listarElementos(RUTA_LIBROS, "libro")
+            menuVerLibros()
         elif opcion == "2":
-            elemento.listarElementos(RUTA_PELICULAS, "película")
+            menuVerPeliculas()
         elif opcion == "3":
-            elemento.listarElementos(RUTA_MUSICA, "música")
+            menuVerMusica()
         elif opcion == "4":
             break
         else:
             print("Opción inválida.")
             pausarPantalla()
+
+# Agregar estas nuevas funciones también en controllers/mainmenu.py:
+
+def menuVerLibros():
+    while True:
+        limpiarPantalla()
+        print("===========================================")
+        print("        Ver Libros")
+        print("===========================================")
+        print("¿Cómo deseas filtrar los libros?")
+        print("1. Filtrar por Título")
+        print("2. Filtrar por Autor")
+        print("3. Filtrar por Género")
+        print("4. Regresar")
+        print("===========================================")
+
+        opcion = input("Selecciona una opción (1-4): ").strip()
+
+        if opcion == "1":
+            elemento.buscarElementoPorCampo(RUTA_LIBROS, "libro", "titulo")
+        elif opcion == "2":
+            elemento.buscarElementoPorCampo(RUTA_LIBROS, "libro", "autor")
+        elif opcion == "3":
+            elemento.filtrarPorGenero(RUTA_LIBROS, "libros")
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
+
+def menuVerPeliculas():
+    while True:
+        limpiarPantalla()
+        print("===========================================")
+        print("        Ver Películas")
+        print("===========================================")
+        print("¿Cómo deseas filtrar las películas?")
+        print("1. Filtrar por Título")
+        print("2. Filtrar por Director")
+        print("3. Filtrar por Género")
+        print("4. Regresar")
+        print("===========================================")
+
+        opcion = input("Selecciona una opción (1-4): ").strip()
+
+        if opcion == "1":
+            elemento.buscarElementoPorCampo(RUTA_PELICULAS, "película", "titulo")
+        elif opcion == "2":
+            elemento.buscarElementoPorCampo(RUTA_PELICULAS, "película", "director")
+        elif opcion == "3":
+            elemento.filtrarPorGenero(RUTA_PELICULAS, "películas")
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
+
+def menuVerMusica():
+    while True:
+        limpiarPantalla()
+        print("===========================================")
+        print("        Ver Música")
+        print("===========================================")
+        print("¿Cómo deseas filtrar la música?")
+        print("1. Filtrar por Título")
+        print("2. Filtrar por Artista")
+        print("3. Filtrar por Género")
+        print("4. Regresar")
+        print("===========================================")
+
+        opcion = input("Selecciona una opción (1-4): ").strip()
+
+        if opcion == "1":
+            elemento.buscarElementoPorCampo(RUTA_MUSICA, "música", "titulo")
+        elif opcion == "2":
+            elemento.buscarElementoPorCampo(RUTA_MUSICA, "música", "artista")
+        elif opcion == "3":
+            elemento.filtrarPorGenero(RUTA_MUSICA, "música")
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida.")
+            pausarPantalla()
+
+# Reemplazar la función menuGuardarCargar() en controllers/mainmenu.py por esta:
 
 def menuGuardarCargar():
     while True:
@@ -370,22 +456,20 @@ def menuGuardarCargar():
         print("===================================")
         print("1. Guardar colección")
         print("2. Cargar colección")
-        print("3. Regresar al Menú Principal")
+        print("3. Ver colecciones guardadas")
+        print("4. Regresar al Menú Principal")
         print("===================================")
 
-        opcion = input("Seleccione una opción (1-3): ").strip()
+        opcion = input("Seleccione una opción (1-4): ").strip()
 
         if opcion == "1":
-            print("Colección guardada automáticamente al modificar datos.")
-            pausarPantalla()
+            elemento.guardarColeccion()
         elif opcion == "2":
-            cargarJson(RUTA_LIBROS)
-            cargarJson(RUTA_PELICULAS)
-            cargarJson(RUTA_MUSICA)
-            print(" Colección cargada correctamente.")
-            pausarPantalla()
+            elemento.cargarColeccion()
         elif opcion == "3":
+            elemento.listarColecciones()
+        elif opcion == "4":
             break
         else:
-            print(" Opción inválida.")
+            print("Opción inválida.")
             pausarPantalla()
