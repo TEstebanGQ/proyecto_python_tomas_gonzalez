@@ -1,7 +1,7 @@
 
-# Python proyecto: Administrador de Colección
+# Python proyecto: Administrador de Colección de libros/peliculas y musica
 
-Un sistema de gestión completo para organizar tu colección personal de libros, películas y música. Desarrollado en Python con una interfaz de consola intuitiva y almacenamiento en archivos JSON.
+Este proyecto esta basado en la interfaz de python algo facil de manejar y administar, para que el usuario no tenga complicaciones a la hora de utilizar el administrador de colecion y puede agregar informacion ya sea a libros , peliculas y musica, para tener mejor claridad de su infromacion.
 
 ##  Características Principales
 
