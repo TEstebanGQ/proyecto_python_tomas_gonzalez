@@ -149,6 +149,37 @@ def eliminarElemento(tipoElemento):
     else:
         print(f"ID no encontrado en {config['plural']}.")
     pausarPantalla()
+# Agregar esta nueva función al archivo controllers/elemento.py
+
+def mostrarTablaSinId(elementos, tipoElemento, titulo=""):
+    """Muestra tabla sin la columna ID para eliminación por título"""
+    if not elementos:
+        print(f"No hay {tipoElemento} registrados.")
+        return
+    
+    if titulo:
+        print(f"=== {titulo} ===")
+    
+    config = obtenerConfigTipo(tipoElemento)
+    campo_persona = config['campo_persona']
+    
+    # Encabezados sin ID
+    headers = ["Título", config['etiqueta_persona'], "Género", "Valoración"]
+    
+    # Filas sin ID
+    filas = []
+    for elemento in elementos:
+        fila = [
+            elemento["titulo"], 
+            elemento.get(campo_persona, "N/A"), 
+            elemento["genero"], 
+            elemento["valoracion"]
+        ]
+        filas.append(fila)
+    
+    print(tabulate(filas, headers=headers, tablefmt="fancy_grid"))
+
+# Reemplazar la función eliminarElementoPorTitulo() existente con esta versión:
 
 def eliminarElementoPorTitulo(tipoElemento):
     limpiarPantalla()
@@ -160,7 +191,8 @@ def eliminarElementoPorTitulo(tipoElemento):
         pausarPantalla()
         return
 
-    mostrarTabla(elementos, tipoElemento, f"{config['plural']} disponibles para eliminar")
+    # Usar la nueva función que NO muestra IDs
+    mostrarTablaSinId(elementos, tipoElemento, f"{config['plural']} disponibles para eliminar")
 
     titulo_buscar = validarSoloLetras(f"Ingrese el título del {config['nombre']} a eliminar: ")
     coincidencias = [e for e in elementos if titulo_buscar.lower() in e["titulo"].lower()]
@@ -171,6 +203,7 @@ def eliminarElementoPorTitulo(tipoElemento):
         return
     
     if len(coincidencias) == 1:
+        # Una sola coincidencia - eliminación directa
         elemento_eliminar = coincidencias[0]
         confirmacion = input(f"¿Está seguro de eliminar '{elemento_eliminar['titulo']}'? (s/n): ").strip().lower()
         if confirmacion == 's':
@@ -180,24 +213,32 @@ def eliminarElementoPorTitulo(tipoElemento):
         else:
             print("Eliminación cancelada.")
     else:
+        # Múltiples coincidencias - mostrar opciones numeradas SIN IDs
         print(f"\nSe encontraron {len(coincidencias)} {config['plural']} con ese título:")
-        mostrarTabla(coincidencias, tipoElemento)
+        mostrarTablaSinId(coincidencias, tipoElemento)
         
-        id_eliminar = input("Ingrese el ID específico a eliminar: ").strip()
-        elemento_eliminar = next((e for e in coincidencias if e["id"] == id_eliminar), None)
+        print("\nSeleccione cuál eliminar:")
+        for i, elemento in enumerate(coincidencias, 1):
+            print(f"{i}. {elemento['titulo']} - {elemento.get(config['campo_persona'], 'N/A')} ({elemento['genero']})")
         
-        if elemento_eliminar:
-            confirmacion = input(f"¿Está seguro de eliminar '{elemento_eliminar['titulo']}'? (s/n): ").strip().lower()
-            if confirmacion == 's':
-                elementos.remove(elemento_eliminar)
-                guardarJson(config['ruta'], elementos)
-                print(f"{config['nombre']} eliminado correctamente.")
+        try:
+            seleccion = int(input("Ingrese el número del elemento a eliminar: ")) - 1
+            if 0 <= seleccion < len(coincidencias):
+                elemento_eliminar = coincidencias[seleccion]
+                confirmacion = input(f"¿Está seguro de eliminar '{elemento_eliminar['titulo']}'? (s/n): ").strip().lower()
+                if confirmacion == 's':
+                    elementos.remove(elemento_eliminar)
+                    guardarJson(config['ruta'], elementos)
+                    print(f"{config['nombre']} eliminado correctamente.")
+                else:
+                    print("Eliminación cancelada.")
             else:
-                print("Eliminación cancelada.")
-        else:
-            print("ID no válido.")
+                print("Selección inválida.")
+        except ValueError:
+            print("Debe ingresar un número válido.")
     
     pausarPantalla()
+
 
 def guardarColeccion():
     limpiarPantalla()

@@ -1,0 +1,178 @@
+[
+    {
+        "nombre": "abds",
+        "libros": [
+            {
+                "titulo": "casadores",
+                "autor": "as",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00001"
+            }
+        ],
+        "peliculas": [
+            {
+                "titulo": "son como niños",
+                "director": "michael",
+                "genero": "comedia",
+                "valoracion": 4.5,
+                "id": "00001"
+            },
+            {
+                "titulo": "rapidos",
+                "director": "fan",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00002"
+            }
+        ],
+        "musica": [
+            {
+                "titulo": "nunca volvieron",
+                "artista": "Morat",
+                "genero": "pop latino",
+                "valoracion": 5.0,
+                "id": "00001"
+            },
+            {
+                "titulo": "urus blue",
+                "artista": "blessd",
+                "genero": "regueton",
+                "valoracion": 4.5,
+                "id": "00002"
+            }
+        ]
+    },
+    {
+        "nombre": "aaa",
+        "libros": [
+            {
+                "titulo": "casadores",
+                "autor": "as",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00001"
+            }
+        ],
+        "peliculas": [
+            {
+                "titulo": "son como niños",
+                "director": "michael",
+                "genero": "comedia",
+                "valoracion": 4.5,
+                "id": "00001"
+            },
+            {
+                "titulo": "rapidos",
+                "director": "fan",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00002"
+            }
+        ],
+        "musica": [
+            {
+                "titulo": "nunca volvieron",
+                "artista": "Morat",
+                "genero": "pop latino",
+                "valoracion": 5.0,
+                "id": "00001"
+            },
+            {
+                "titulo": "urus blue",
+                "artista": "blessd",
+                "genero": "regueton",
+                "valoracion": 4.5,
+                "id": "00002"
+            }
+        ]
+    },
+    {
+        "nombre": "aventur",
+        "libros": [
+            {
+                "titulo": "casadores",
+                "autor": "as",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00001"
+            }
+        ],
+        "peliculas": [
+            {
+                "titulo": "son como niños",
+                "director": "michael",
+                "genero": "comedia",
+                "valoracion": 4.5,
+                "id": "00001"
+            },
+            {
+                "titulo": "rapidos",
+                "director": "fan",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00002"
+            }
+        ],
+        "musica": [
+            {
+                "titulo": "nunca volvieron",
+                "artista": "Morat",
+                "genero": "pop latino",
+                "valoracion": 5.0,
+                "id": "00001"
+            },
+            {
+                "titulo": "urus blue",
+                "artista": "blessd",
+                "genero": "regueton",
+                "valoracion": 4.5,
+                "id": "00002"
+            }
+        ]
+    },
+    {
+        "nombre": "s",
+        "libros": [
+            {
+                "titulo": "casadores",
+                "autor": "as",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00001"
+            }
+        ],
+        "peliculas": [
+            {
+                "titulo": "son como niños",
+                "director": "michael",
+                "genero": "comedia",
+                "valoracion": 4.5,
+                "id": "00001"
+            },
+            {
+                "titulo": "rapidos",
+                "director": "fan",
+                "genero": "accion",
+                "valoracion": 5.0,
+                "id": "00002"
+            }
+        ],
+        "musica": [
+            {
+                "titulo": "nunca volvieron",
+                "artista": "Morat",
+                "genero": "pop latino",
+                "valoracion": 5.0,
+                "id": "00001"
+            },
+            {
+                "titulo": "urus blue",
+                "artista": "blessd",
+                "genero": "regueton",
+                "valoracion": 4.5,
+                "id": "00002"
+            }
+        ]
+    }
+]

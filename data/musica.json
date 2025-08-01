@@ -5,5 +5,12 @@
         "genero": "pop latino",
         "valoracion": 5.0,
         "id": "00001"
+    },
+    {
+        "titulo": "urus blue",
+        "artista": "blessd",
+        "genero": "regueton",
+        "valoracion": 4.5,
+        "id": "00002"
     }
 ]

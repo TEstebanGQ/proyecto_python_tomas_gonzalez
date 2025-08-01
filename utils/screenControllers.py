@@ -4,7 +4,7 @@ import sys
 
 def pausarPantalla():
     if sys.platform=="linux" or sys.platform=="darwin":
-        input('...')
+        input('Presiona Enter para continuar .....')
     else:
         os.system('pause')
         
