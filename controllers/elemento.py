@@ -414,16 +414,16 @@ def cargarColeccion():
     
     # Cargar colecciones existentes
     ruta_colecciones = "data/colecciones.json"
-    colecciones_existentes = cargarJson(ruta_colecciones)
+    coleccionesExistentes = cargarJson(ruta_colecciones)
     
-    if not colecciones_existentes:
+    if not coleccionesExistentes:
         print("⚠ No hay colecciones guardadas.")
         pausarPantalla()
         return
     
     # Mostrar colecciones disponibles
     print("Colecciones disponibles:")
-    for i, coleccion in enumerate(colecciones_existentes, 1):
+    for i, coleccion in enumerate(coleccionesExistentes, 1):
         nombre = coleccion.get("nombre", f"Colección {i}")
         libros_count = len(coleccion.get("libros", []))
         peliculas_count = len(coleccion.get("peliculas", []))
@@ -431,19 +431,30 @@ def cargarColeccion():
         total = libros_count + peliculas_count + musica_count
         print(f"{i}. {nombre} ({total} elementos)")
     print("=" * 40)
+    try:
+        seleccion = int(input("Ingrese el número de la colección a cargar: "))
+        if seleccion < 1 or seleccion > len(coleccionesExistentes):
+            raise ValueError
+    except ValueError:
+        print("⚠ Selección inválida.")
+        pausarPantalla()
+        return
     
-    # Pedir nombre de la colección a cargar
-    nombre_coleccion = validarSoloLetras("Ingrese el nombre de la colección a cargar: ")
+    coleccionSeleccionada = coleccionesExistentes[seleccion - 1]
+    nombreColeccion = coleccionSeleccionada.get("nombre", f"Colección {seleccion}")
+
+    
+
     
     # Buscar la colección
     coleccion_encontrada = None
-    for coleccion in colecciones_existentes:
-        if coleccion.get("nombre", "").lower() == nombre_coleccion.lower():
+    for coleccion in coleccionesExistentes:
+        if coleccion.get("nombre", "").lower() == nombreColeccion.lower():
             coleccion_encontrada = coleccion
             break
     
     if not coleccion_encontrada:
-        print(f"⚠ No se encontró una colección llamada '{nombre_coleccion}'.")
+        print(f"⚠ No se encontró una colección llamada '{nombreColeccion}'.")
         pausarPantalla()
         return
     
@@ -454,7 +465,6 @@ def cargarColeccion():
         pausarPantalla()
         return
     
-    # Cargar los datos de la colección
     libros = coleccion_encontrada.get("libros", [])
     peliculas = coleccion_encontrada.get("peliculas", [])
     musica = coleccion_encontrada.get("musica", [])
@@ -464,14 +474,13 @@ def cargarColeccion():
     guardarJson(RUTA_PELICULAS, peliculas)
     guardarJson(RUTA_MUSICA, musica)
     
-    print(f"Colección '{nombre_coleccion}' cargada correctamente.")
+    print(f"Colección '{nombreColeccion}' cargada correctamente.")
     print(f"- Libros cargados: {len(libros)}")
     print(f"- Películas cargadas: {len(peliculas)}")
     print(f"- Música cargada: {len(musica)}")
     pausarPantalla()
 
 def listarColecciones():
-    """Lista todas las colecciones guardadas con detalles"""
     limpiarPantalla()
     print("=== Colecciones Guardadas ===")
     
@@ -479,7 +488,7 @@ def listarColecciones():
     colecciones_existentes = cargarJson(ruta_colecciones)
     
     if not colecciones_existentes:
-        print("⚠ No hay colecciones guardadas.")
+        print("No hay colecciones guardadas.")
         pausarPantalla()
         return
     
