@@ -102,7 +102,7 @@ def editarElementoCampoEspecifico(tipoElemento, campoAEditar):
     elemento = next((e for e in elementos if e["id"] == idEditar), None)
 
     if not elemento:
-        print(f"⚠ ID no encontrado en {config['plural']}.")
+        print(f"ID no encontrado en {config['plural']}.")
         pausarPantalla()
         return
 
@@ -134,7 +134,7 @@ def eliminarElemento(tipoElemento):
     elementos = cargarJson(config['ruta'])
 
     if not elementos:
-        print(f"⚠ No hay {config['plural']} registrados para eliminar.")
+        print(f"No hay {config['plural']} registrados para eliminar.")
         pausarPantalla()
         return
 
@@ -149,7 +149,7 @@ def eliminarElemento(tipoElemento):
     else:
         print(f"ID no encontrado en {config['plural']}.")
     pausarPantalla()
-# Agregar esta nueva función al archivo controllers/elemento.py
+
 
 def mostrarTablaSinId(elementos, tipoElemento, titulo=""):
     """Muestra tabla sin la columna ID para eliminación por título"""
@@ -162,11 +162,8 @@ def mostrarTablaSinId(elementos, tipoElemento, titulo=""):
     
     config = obtenerConfigTipo(tipoElemento)
     campo_persona = config['campo_persona']
-    
-    # Encabezados sin ID
     headers = ["Título", config['etiqueta_persona'], "Género", "Valoración"]
-    
-    # Filas sin ID
+
     filas = []
     for elemento in elementos:
         fila = [
@@ -179,7 +176,7 @@ def mostrarTablaSinId(elementos, tipoElemento, titulo=""):
     
     print(tabulate(filas, headers=headers, tablefmt="fancy_grid"))
 
-# Reemplazar la función eliminarElementoPorTitulo() existente con esta versión:
+
 
 def eliminarElementoPorTitulo(tipoElemento):
     limpiarPantalla()
@@ -191,7 +188,6 @@ def eliminarElementoPorTitulo(tipoElemento):
         pausarPantalla()
         return
 
-    # Usar la nueva función que NO muestra IDs
     mostrarTablaSinId(elementos, tipoElemento, f"{config['plural']} disponibles para eliminar")
 
     titulo_buscar = validarSoloLetras(f"Ingrese el título del {config['nombre']} a eliminar: ")
@@ -203,21 +199,20 @@ def eliminarElementoPorTitulo(tipoElemento):
         return
     
     if len(coincidencias) == 1:
-        # Una sola coincidencia - eliminación directa
         elemento_eliminar = coincidencias[0]
-        confirmacion = input(f"¿Está seguro de eliminar '{elemento_eliminar['titulo']}'? (s/n): ").strip().lower()
-        if confirmacion == 's':
+        confirmacion = input(f"¿Está seguro de eliminar '{elemento_eliminar['titulo']}'? (si/no): ").strip().lower()
+        if confirmacion == 'si':
             elementos.remove(elemento_eliminar)
             guardarJson(config['ruta'], elementos)
             print(f"{config['nombre']} '{elemento_eliminar['titulo']}' eliminado correctamente.")
         else:
             print("Eliminación cancelada.")
     else:
-        # Múltiples coincidencias - mostrar opciones numeradas SIN IDs
-        print(f"\nSe encontraron {len(coincidencias)} {config['plural']} con ese título:")
+
+        print(f"Se encontraron {len(coincidencias)} {config['plural']} con ese título:")
         mostrarTablaSinId(coincidencias, tipoElemento)
         
-        print("\nSeleccione cuál eliminar:")
+        print("Seleccione cuál eliminar:")
         for i, elemento in enumerate(coincidencias, 1):
             print(f"{i}. {elemento['titulo']} - {elemento.get(config['campo_persona'], 'N/A')} ({elemento['genero']})")
         

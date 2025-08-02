@@ -9,7 +9,7 @@ def cargarJson(ruta):
         with open(ruta, "r", encoding="utf-8") as archivo:
             return json.load(archivo)
     except (json.JSONDecodeError, FileNotFoundError):
-        print(f"⚠ Archivo {ruta} corrupto o vacío. Se reiniciará.")
+        print(f" Archivo {ruta} corrupto o vacío. Se reiniciará.")
         return []  
     
 def guardarJson(ruta, datos):

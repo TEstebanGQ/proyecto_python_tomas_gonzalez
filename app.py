@@ -1,4 +1,4 @@
-from utils.screenControllers import limpiarPantalla
+from utils.screenControllers import limpiarPantalla, pausarPantalla
 import controllers.mainmenu as mainmenu
 
 def menu():
@@ -58,7 +58,6 @@ def menu():
         except ValueError:
             limpiarPantalla()
             print("Debe ingresar un número válido.")
-            input("Presione Enter para continuar...")
-
+            pausarPantalla()
 if __name__ == "__main__":
     menu()
